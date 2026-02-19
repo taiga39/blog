@@ -10,6 +10,8 @@ from pathlib import Path
 POSTS_DIR = Path(__file__).parent / "posts"
 DIST_DIR = Path(__file__).parent / "docs"
 SITE_TITLE = "taiga"
+SITE_DESCRIPTION = "Tech blog by taiga39"
+SITE_AUTHOR = "taiga39"
 
 
 # --- Markdown parser ---
@@ -130,6 +132,15 @@ INDEX_TEMPLATE = """\
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{site_description}">
+  <meta name="author" content="{site_author}">
+  <meta property="og:title" content="{site_title}">
+  <meta property="og:description" content="{site_description}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{site_title}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{site_title}">
+  <meta name="twitter:description" content="{site_description}">
   <title>{site_title}</title>
   <style>
     * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -169,6 +180,15 @@ ARTICLE_TEMPLATE = """\
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{excerpt}">
+  <meta name="author" content="{site_author}">
+  <meta property="og:title" content="{title}">
+  <meta property="og:description" content="{excerpt}">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="{site_title}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{title}">
+  <meta name="twitter:description" content="{excerpt}">
   <title>{title}</title>
   <style>
     * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -242,6 +262,9 @@ def build():
             title=html.escape(p["title"]),
             date=p["date_fmt"],
             body=p["body"],
+            excerpt=html.escape(p["excerpt"]),
+            site_title=SITE_TITLE,
+            site_author=SITE_AUTHOR,
         )
         (DIST_DIR / f'{p["slug"]}.html').write_text(article, encoding="utf-8")
 
@@ -255,7 +278,12 @@ def build():
         )
         for p in posts
     )
-    index = INDEX_TEMPLATE.format(site_title=SITE_TITLE, posts=entries)
+    index = INDEX_TEMPLATE.format(
+        site_title=SITE_TITLE,
+        site_description=SITE_DESCRIPTION,
+        site_author=SITE_AUTHOR,
+        posts=entries,
+    )
     (DIST_DIR / "index.html").write_text(index, encoding="utf-8")
 
     print(f"Built {len(posts)} posts -> dist/")
