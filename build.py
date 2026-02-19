@@ -9,7 +9,7 @@ from pathlib import Path
 
 POSTS_DIR = Path(__file__).parent / "posts"
 DIST_DIR = Path(__file__).parent / "docs"
-SITE_TITLE = "Blog Title"
+SITE_TITLE = "taiga"
 
 
 # --- Markdown parser ---
