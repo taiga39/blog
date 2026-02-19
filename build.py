@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 POSTS_DIR = Path(__file__).parent / "posts"
-DIST_DIR = Path(__file__).parent / "dist"
+DIST_DIR = Path(__file__).parent / "docs"
 SITE_TITLE = "Blog Title"
 
 
