@@ -126,6 +126,42 @@ def format_date(date_str):
     d = datetime.strptime(date_str, "%Y-%m-%d")
     return d.strftime("%b %d, %Y").replace(" 0", " ")
 
+SPA_SCRIPT = """  <script>
+    (function() {
+      function navigate(url) {
+        var c = document.querySelector('.container');
+        c.style.opacity = '0';
+        fetch(url).then(function(r) { return r.text(); }).then(function(html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var newC = doc.querySelector('.container');
+          document.title = doc.title;
+          setTimeout(function() {
+            c.innerHTML = newC.innerHTML;
+            c.style.opacity = '1';
+            window.scrollTo(0, 0);
+            listen();
+          }, 200);
+          history.pushState(null, '', url);
+        });
+      }
+      function listen() {
+        document.querySelectorAll('a[href]').forEach(function(a) {
+          var href = a.getAttribute('href');
+          if (href && href.endsWith('.html') && !a._spa) {
+            a._spa = true;
+            a.addEventListener('click', function(e) {
+              e.preventDefault();
+              navigate(href);
+            });
+          }
+        });
+      }
+      window.addEventListener('popstate', function() { navigate(location.href); });
+      document.querySelector('.container').style.transition = 'opacity 0.2s';
+      listen();
+    })();
+  </script>"""
+
 INDEX_TEMPLATE = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -164,6 +200,7 @@ INDEX_TEMPLATE = """\
     <h1>{site_title}</h1>
 {posts}
   </div>
+__SPA__
 </body>
 </html>"""
 
@@ -227,6 +264,7 @@ ARTICLE_TEMPLATE = """\
 {body}
     </div>
   </div>
+__SPA__
 </body>
 </html>"""
 
@@ -265,7 +303,7 @@ def build():
             excerpt=html.escape(p["excerpt"]),
             site_title=SITE_TITLE,
             site_author=SITE_AUTHOR,
-        )
+        ).replace("__SPA__", SPA_SCRIPT)
         (DIST_DIR / f'{p["slug"]}.html').write_text(article, encoding="utf-8")
 
     # Write index
@@ -283,7 +321,7 @@ def build():
         site_description=SITE_DESCRIPTION,
         site_author=SITE_AUTHOR,
         posts=entries,
-    )
+    ).replace("__SPA__", SPA_SCRIPT)
     (DIST_DIR / "index.html").write_text(index, encoding="utf-8")
 
     print(f"Built {len(posts)} posts -> dist/")

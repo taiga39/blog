@@ -34,6 +34,11 @@
   <div class="container">
     <h1>taiga</h1>
     <div class="post">
+      <div class="post-date">Feb 23, 2026</div>
+      <div class="post-title"><a href="every-project-becomes-complex.html">Every project becomes complex</a></div>
+      <p class="post-excerpt">Instead of calling everything technical debt, I want to appreciate the code that got us here.</p>
+    </div>
+    <div class="post">
       <div class="post-date">Feb 22, 2026</div>
       <div class="post-title"><a href="i-want-a-writing-device.html">I want a device just for writing</a></div>
       <p class="post-excerpt">Recently, I&#x27;ve been writing more. So I want a device just for writing.</p>
@@ -49,5 +54,40 @@
       <p class="post-excerpt">Before this, I had only used Ruby and Ruby on Rails.</p>
     </div>
   </div>
+  <script>
+    (function() {
+      function navigate(url) {
+        var c = document.querySelector('.container');
+        c.style.opacity = '0';
+        fetch(url).then(function(r) { return r.text(); }).then(function(html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var newC = doc.querySelector('.container');
+          document.title = doc.title;
+          setTimeout(function() {
+            c.innerHTML = newC.innerHTML;
+            c.style.opacity = '1';
+            window.scrollTo(0, 0);
+            listen();
+          }, 200);
+          history.pushState(null, '', url);
+        });
+      }
+      function listen() {
+        document.querySelectorAll('a[href]').forEach(function(a) {
+          var href = a.getAttribute('href');
+          if (href && href.endsWith('.html') && !a._spa) {
+            a._spa = true;
+            a.addEventListener('click', function(e) {
+              e.preventDefault();
+              navigate(href);
+            });
+          }
+        });
+      }
+      window.addEventListener('popstate', function() { navigate(location.href); });
+      document.querySelector('.container').style.transition = 'opacity 0.2s';
+      listen();
+    })();
+  </script>
 </body>
 </html>

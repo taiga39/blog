@@ -54,5 +54,40 @@
 <p>There is a device called Pomera, but it&#x27;s too expensive.</p>
     </div>
   </div>
+  <script>
+    (function() {
+      function navigate(url) {
+        var c = document.querySelector('.container');
+        c.style.opacity = '0';
+        fetch(url).then(function(r) { return r.text(); }).then(function(html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var newC = doc.querySelector('.container');
+          document.title = doc.title;
+          setTimeout(function() {
+            c.innerHTML = newC.innerHTML;
+            c.style.opacity = '1';
+            window.scrollTo(0, 0);
+            listen();
+          }, 200);
+          history.pushState(null, '', url);
+        });
+      }
+      function listen() {
+        document.querySelectorAll('a[href]').forEach(function(a) {
+          var href = a.getAttribute('href');
+          if (href && href.endsWith('.html') && !a._spa) {
+            a._spa = true;
+            a.addEventListener('click', function(e) {
+              e.preventDefault();
+              navigate(href);
+            });
+          }
+        });
+      }
+      window.addEventListener('popstate', function() { navigate(location.href); });
+      document.querySelector('.container').style.transition = 'opacity 0.2s';
+      listen();
+    })();
+  </script>
 </body>
 </html>
