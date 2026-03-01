@@ -274,10 +274,14 @@ __SPA__
 def build():
     DIST_DIR.mkdir(exist_ok=True)
 
+    today = datetime.now().strftime("%Y-%m-%d")
+
     posts = []
     for f in sorted(POSTS_DIR.glob("*.md")):
         raw = f.read_text(encoding="utf-8")
         meta, body_md = parse_frontmatter(raw)
+        if meta.get("date", "") > today:
+            continue
         slug = f.stem
         body_html = md_to_html(body_md.strip())
         date_fmt = format_date(meta["date"])
