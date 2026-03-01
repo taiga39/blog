@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="I&#x27;m studying English, and this blog is part of that.">
+  <meta name="author" content="taiga39">
+  <meta property="og:title" content="I write English the way I speak">
+  <meta property="og:description" content="I&#x27;m studying English, and this blog is part of that.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="taiga">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="I write English the way I speak">
+  <meta name="twitter:description" content="I&#x27;m studying English, and this blog is part of that.">
+  <title>I write English the way I speak</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f5f4f0;
+      color: #2c2c2c;
+      line-height: 1.9;
+    }
+    .container { max-width: 640px; margin: 0 auto; padding: 80px 20px 120px; }
+    .back { font-size: 0.8rem; color: #999; text-decoration: none; }
+    .back:hover { color: #2c2c2c; }
+    .date { font-size: 0.72rem; color: #999; letter-spacing: 0.06em; margin-top: 60px; }
+    h1 { font-size: 1.3rem; font-weight: 400; margin-top: 8px; margin-bottom: 48px; }
+    .body p { margin-bottom: 1.6em; font-size: 0.92rem; }
+    .body pre { background: #eae9e5; padding: 16px 20px; margin-bottom: 1.6em; overflow-x: auto; border-radius: 4px; }
+    .body code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 0.84rem; }
+    .body p code { background: #eae9e5; padding: 2px 6px; border-radius: 3px; }
+    .body blockquote { border-left: 2px solid #ccc; padding-left: 16px; color: #666; margin-bottom: 1.6em; }
+    .body ul, .body ol { margin-bottom: 1.6em; padding-left: 1.4em; font-size: 0.92rem; }
+    .body li { margin-bottom: 0.4em; }
+    .body h2 { font-size: 1.1rem; font-weight: 400; margin: 2em 0 0.8em; }
+    .body h3 { font-size: 1rem; font-weight: 600; margin: 1.6em 0 0.6em; }
+    .body hr { border: none; border-top: 1px solid #ddd; margin: 2em 0; }
+    .body img { max-width: 100%; height: auto; margin-bottom: 1.6em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html" class="back">&larr; Index</a>
+
+    <div class="date">Feb 20, 2026</div>
+    <h1>I write English the way I speak</h1>
+
+    <div class="body">
+<p>I write English the way I speak.</p>
+<p>I&#x27;m studying English, and this blog is part of that.</p>
+<p>My main goal is speaking rather than writing.</p>
+<p>People say you don&#x27;t need to speak English perfectly, so I just write what I think and don&#x27;t revise much.</p>
+<p>It&#x27;s still hard though.</p>
+<p>Thank you, AI agent, for helping with my rough English.</p>
+    </div>
+  </div>
+  <script>
+    (function() {
+      function navigate(url) {
+        var c = document.querySelector('.container');
+        c.style.opacity = '0';
+        fetch(url).then(function(r) { return r.text(); }).then(function(html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var newC = doc.querySelector('.container');
+          document.title = doc.title;
+          setTimeout(function() {
+            c.innerHTML = newC.innerHTML;
+            c.style.opacity = '1';
+            window.scrollTo(0, 0);
+            listen();
+          }, 200);
+          history.pushState(null, '', url);
+        });
+      }
+      function listen() {
+        document.querySelectorAll('a[href]').forEach(function(a) {
+          var href = a.getAttribute('href');
+          if (href && href.endsWith('.html') && !a._spa) {
+            a._spa = true;
+            a.addEventListener('click', function(e) {
+              e.preventDefault();
+              navigate(href);
+            });
+          }
+        });
+      }
+      window.addEventListener('popstate', function() { navigate(location.href); });
+      document.querySelector('.container').style.transition = 'opacity 0.2s';
+      listen();
+    })();
+  </script>
+</body>
+</html>
