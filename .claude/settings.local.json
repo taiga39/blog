@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python build.py:*)"
+      "Bash(python build.py:*)",
+      "Bash(ls /c/Users/hinok/projects/blog/*.sh)",
+      "mcp__notion__notion-fetch",
+      "Write(posts/*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git status:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(ls:*)",
+      "Read",
+      "Glob",
+      "Grep"
     ]
   }
 }
