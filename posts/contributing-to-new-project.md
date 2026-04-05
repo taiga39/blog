@@ -1,7 +1,7 @@
 ---
 title: Even if you joined the project recently, you can still contribute.
 date: 2026-04-02
-excerpt: 新しいプロジェクトに参加したばかりでも貢献できる。完璧なチームはないので、前職での経験や知識を活かして共有すべき。
+excerpt: You can contribute even if you just joined a new project. No team is perfect, so share the experience and knowledge from your previous work.
 ---
 
 Even if you joined the project recently, you can still contribute.

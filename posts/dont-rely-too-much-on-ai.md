@@ -1,7 +1,7 @@
 ---
 title: I don't want to rely too much on AI.
 date: 2026-04-01
-excerpt: 新しいプロジェクトで初めてGoを使い始めた。コーディングエージェントに頼りすぎていると感じ、学習と設計のためにまずは自分で書くことにした。
+excerpt: Started using Go for the first time on a new project. Felt I was relying too much on the coding agent, so decided to write code myself first for better learning and design.
 ---
 
 I don't want to rely too much on AI.
